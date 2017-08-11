@@ -29,7 +29,7 @@ class NetworkDevice(HardwareDevice):
 
         self.links      = []
 
-        self.data_queue = {}
+        self.data_queue = []
         self.routing    = {}  # destination: interface
 
     def _link_create(self, link):
@@ -45,7 +45,7 @@ class NetworkDevice(HardwareDevice):
             return False
         elif forward is not None and forward is not self.ip_addr:
             return self.routing[forward].send(self, data, forward)
-        self.data_queue[host] = data
+        self.data_queue.append(data)
         return True
 
     def get_data(self):
@@ -69,6 +69,11 @@ class NetworkDevice(HardwareDevice):
 
         return False
 
+    def has_route_to(self, ip_addr):
+        if ip_addr in self.routing:
+            return True
+        return False
+
     def send_data(self, ip_addr, packet):
         if isinstance(packet, basestring):
             packet = Packet(packet)
@@ -78,15 +83,15 @@ class NetworkDevice(HardwareDevice):
 
         if ip_addr not in [host.ip_addr for host in self.network.hosts]:
             raise HostNotFound("Host must be on the same network.")
-        elif ip_addr not in self.routing:
-            return False
-        elif ip_addr not in [x.get_host(self).ip_addr for x in self.links]:
-            return False
 
-        elif not self.routing[ip_addr].send(self, packet, ip_addr):
-            return False
+        if ip_addr in self.routing:
+            __ = self.routing[ip_addr].send(host=self,
+                                            data=packet,
+                                            forward=ip_addr
+            )
 
-        return True
+            return __
+
 
     def enable(self):
         self.enabled = True
@@ -96,6 +101,9 @@ class NetworkDevice(HardwareDevice):
 
     def invert(self):
         self.enabled ^= 1
+
+    def __repr__(self):
+        return "<NetworkDevice (IP address=%s)>" % self.ip_addr
 
     def discover(self, ip_addr, _ext=False):
         if ip_addr == self.ip_addr:

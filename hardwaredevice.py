@@ -7,6 +7,7 @@ from exceptions import UnablePortConnection
 
 class HardwareDevice(object):
     def __init__(self, mac_addr, label, nports, power_usage=0):
+        self.uf_mac_addr = mac_addr
         mac_addr = ''.join(chr(int(c, 16)) for c in mac_addr.split(':'))
         print(mac_addr)
         self.mac_addr = mac_addr

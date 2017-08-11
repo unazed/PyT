@@ -10,5 +10,8 @@ class Packet(object):
         return ''.join(self.args)
 
     def __repr__(self):
-        return "<Packet: (length=%d), (type=%s)>" % (len(self.__str__()),
-                self.__type__())
+        return "<Packet: (length=%d), (type=%s) >" %\
+                (
+                    len(self.__str__()),
+                    self.__type__()
+                )

@@ -19,7 +19,16 @@ class Ethernet(Packet):
                 "\x00"*46, self.data[:1500], self.crc[:4])
 
     def __type__(self):
-        return "Ethernet"
+        return Ethernet
+
+    def __repr__(self):
+        _data = self.data[:13] + '...'
+        return "<Ethernet Packet (src=%s) (dst=%s) (data=%s)>" %\
+                            (
+                                self.src_mac,
+                                self.dst_mac,
+                                _data
+                            )
 
     @staticmethod
     def decapsulate(eth_packet):
