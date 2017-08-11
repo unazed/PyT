@@ -27,7 +27,7 @@ network = Network("Network 1")
 
 router1 = Router(
            network=network,
-           ip_addr="0.0.0.0",
+           ip_addr="0.0.0.1",
            is_gateway=False,
            mac_addr="00:00:00:00:00:00",
            label="Router 1"
@@ -35,7 +35,7 @@ router1 = Router(
 
 router2 = Router(
            network=network,
-           ip_addr="0.0.0.1",
+           ip_addr="0.0.0.2",
            is_gateway=False,
            mac_addr="00:00:00:00:00:01",
            label="Router 2",
@@ -43,7 +43,7 @@ router2 = Router(
 
 router3 = Router(
            network=network,
-           ip_addr="0.0.0.2",
+           ip_addr="0.0.0.3",
            is_gateway=False,
            mac_addr="00:00:00:00:00:02",
            label="Router 3",
@@ -54,25 +54,35 @@ Link(router2, router1)
 Link(router3, router1)
 
 #    [router 2]    [router3]
-#         \          /
+#          \         /
 #          \        /
 #          [router1]
 
-data = Ethernet(
-    dst_mac="00:00:00:00:00:02",
-    src_mac="00:00:00:00:00:01",
-    type_="\x08\x00",
-    data="",
+r2_data = Ethernet(
+    dst_mac=router3.uf_mac_addr,  # uf -> unformatted e.g. with colons.
+    src_mac=router2.uf_mac_addr,  # *.mac_addr -> formatted for proper
+    type_="\x08\x00",             # transmission.
+    data="this data is from router 2",
     crc="test"
 )
 
-assert router1.is_linked(router2), "r1 -!-> r2"
-assert router1.is_linked(router3), "r1 -!-> r3"
-assert router2.is_linked(router1), "r2 -!-> r1"
-assert router3.is_linked(router1), "r3 -!-> r1"
-assert not router2.send_data("0.0.0.2", data)
-assert router1.send_data("0.0.0.1", data)
-assert router1.send_data("0.0.0.2", data)
-print(router2.data_queue)
-print(router3.data_queue)
+r1_data = Ethernet(
+    dst_mac=router3.uf_mac_addr,
+    src_mac=router1.uf_mac_addr,
+    type_="\x08\x00",
+    data="this data is from router 1",
+    crc="test"
+)
+
+router2.discover("0.0.0.3")
+router2.send_data("0.0.0.3", r2_data)
+router1.send_data("0.0.0.3", r1_data)
+print router3.data_queue
 ```
+
+Which'd output:
+
+```python
+>>> [<Ethernet Packet (src=00:00:00:00:00:01) (dst=00:00:00:00:00:02) (data=this data is ...)>,
+...  <Ethernet Packet (src=00:00:00:00:00:00) (dst=00:00:00:00:00:02) (data=this data is ...)>]
+```  
