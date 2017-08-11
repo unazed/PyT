@@ -14,6 +14,8 @@ And more pretend items such as Networks which combine any form of physical hardw
 
 An example code-base would look something like this: (dated 11/08/2017)
 
+![Example topology](http://i.imgur.com/UXEFTwh.png)
+
 ```python
 from network.router import Router
 from network.network import Network
