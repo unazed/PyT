@@ -52,7 +52,7 @@ Link(router2, router1)
 Link(router3, router1)
 
 #    [router 2]    [router3]
-#          \         /
+#         \          /
 #          \        /
 #          [router1]
 
