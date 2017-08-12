@@ -54,21 +54,21 @@ Link(router2, router1)
 Link(router3, router1)
 
 #    [router 2]    [router3]
-#          \         /
+#         \          /
 #          \        /
 #          [router1]
 
 r2_data = Ethernet(
-    dst_mac=router3.uf_mac_addr,  # uf -> unformatted e.g. with colons.
-    src_mac=router2.uf_mac_addr,  # *.mac_addr -> formatted for proper
-    type_="\x08\x00",             # transmission.
+    dst_mac=router3.mac_addr,
+    src_mac=router2.ac_addr,
+    type_="\x08\x00",
     data="this data is from router 2",
     crc="test"
 )
 
 r1_data = Ethernet(
-    dst_mac=router3.uf_mac_addr,
-    src_mac=router1.uf_mac_addr,
+    dst_mac=router3.mac_addr,
+    src_mac=router1.mac_addr,
     type_="\x08\x00",
     data="this data is from router 1",
     crc="test"
