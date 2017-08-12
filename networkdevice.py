@@ -12,7 +12,6 @@ from packet import Packet
 class NetworkDevice(HardwareDevice):
     def __init__(self, network, ip_addr, is_gateway=False, **kwargs):
         super(NetworkDevice, self).__init__(**kwargs)
-        # multiple inheritance sucks :c
 
         self.network    = network
         self.ip_addr    = ip_addr
@@ -27,9 +26,9 @@ class NetworkDevice(HardwareDevice):
         self.enabled    = True
 
         self.links      = []
-
         self.data_queue = []
-        self.routing    = {}  # destination: interface
+        
+        self.routing    = {}  # {destination: interface}
 
     def _link_create(self, link):
         if not self.enabled:
