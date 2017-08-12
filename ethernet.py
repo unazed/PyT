@@ -10,7 +10,7 @@ class Ethernet(Packet):
         super(Ethernet, self).__init__()
         self.dst_mac = dst_mac
         self.src_mac = src_mac
-        self.type = type_ or "\x08\x00"  # ipv4
+        self.type = type_ or "\x08\x00"  # \x08\x00 -> IPv4 
         self.data = data
         self.crc = crc
 
