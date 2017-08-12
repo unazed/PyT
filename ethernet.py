@@ -3,16 +3,17 @@ Ethernet structure for packet encapsulation.
 """
 
 from packet import Packet
+from utils import eth_fcs
 
 
 class Ethernet(Packet):
-    def __init__(self, dst_mac, src_mac, data, crc, type_=False):
+    def __init__(self, dst_mac, src_mac, data, type_=False):
         super(Ethernet, self).__init__()
         self.dst_mac = dst_mac
         self.src_mac = src_mac
         self.type = type_ or "\x08\x00"  # \x08\x00 -> IPv4 
         self.data = data
-        self.crc = crc
+        self.crc = eth_fcs(data)
 
     def __str__(self):
         """
