@@ -61,7 +61,6 @@ Link(router3, router1)
 r2_data = Ethernet(
     dst_mac=router3.mac_addr,
     src_mac=router2.ac_addr,
-    type_="\x08\x00",
     data="this data is from router 2",
     crc="test"
 )
@@ -69,7 +68,6 @@ r2_data = Ethernet(
 r1_data = Ethernet(
     dst_mac=router3.mac_addr,
     src_mac=router1.mac_addr,
-    type_="\x08\x00",
     data="this data is from router 1",
     crc="test"
 )
