@@ -17,6 +17,6 @@ PRIVATE_IP_CLASSES = {
     "16": ("192.168.0.0", "192.168.255.255"),
 }
 
-MAX_PACKET_SIZE = 1518  # bytes, and this only defines the maximum Ethernet size
+MAX_PACKET_SIZE = 1504  # bytes, and this only defines the maximum Ethernet size
                         # with-out fragmentation
-MIN_PACKET_SIZE = 18  # again Ethernet-based.
+MIN_PACKET_SIZE = 60  # again Ethernet-based.
