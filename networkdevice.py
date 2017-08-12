@@ -6,7 +6,6 @@ from hardwaredevice import HardwareDevice
 from exceptions import DisabledHost
 from exceptions import MultipleGateways
 from exceptions import InvalidDiscoveryHost
-from exceptions import HostNotFound
 from packet import Packet
 
 
@@ -82,7 +81,7 @@ class NetworkDevice(HardwareDevice):
             raise TypeError("Packet must be of 'Packet' class or a string.")
 
         if ip_addr not in [host.ip_addr for host in self.network.hosts]:
-            raise HostNotFound("Host must be on the same network.")
+            raise LookupError("Host must be on the same network.")
 
         if ip_addr in self.routing:
             __ = self.routing[ip_addr].send(host=self,
