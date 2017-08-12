@@ -25,9 +25,9 @@ class Ethernet(Packet):
         _data = self.data[:13] + '...'
         return "<Ethernet Packet (src=%s) (dst=%s) (data=%s)>" %\
                             (
-                                self.src_mac,
-                                self.dst_mac,
-                                _data
+                                repr(self.src_mac),
+                                repr(self.dst_mac),
+                                repr(_data)
                             )
 
     @staticmethod
