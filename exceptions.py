@@ -15,10 +15,6 @@ class InvalidDiscoveryHost(Exception):
     pass
 
 
-class HostNotFound(Exception):
-    pass
-
-
 class DisabledHost(Exception):
     pass
 
