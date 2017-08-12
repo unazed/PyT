@@ -6,11 +6,11 @@ from packet import Packet
 
 
 class Ethernet(Packet):
-    def __init__(self, dst_mac, src_mac, type_, data, crc):
+    def __init__(self, dst_mac, src_mac, data, crc, type_=False):
         super(Ethernet, self).__init__()
         self.dst_mac = dst_mac
         self.src_mac = src_mac
-        self.type = type_
+        self.type = type_ or "\x08\x00"  # ipv4
         self.data = data
         self.crc = crc
 
