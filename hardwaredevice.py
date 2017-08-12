@@ -16,6 +16,7 @@ class HardwareDevice(object):
         self.nports = nports
         self.ports = {-1: None}  # {index: hardware}
         self.power_usage = power_usage
+        self.powered = True
 
     def _connect_port(self, hardware):
         """
