@@ -60,16 +60,14 @@ Link(router3, router1)
 
 r2_data = Ethernet(
     dst_mac=router3.mac_addr,
-    src_mac=router2.ac_addr,
+    src_mac=router2.mac_addr,
     data="this data is from router 2",
-    crc="test"
 )
 
 r1_data = Ethernet(
     dst_mac=router3.mac_addr,
     src_mac=router1.mac_addr,
     data="this data is from router 1",
-    crc="test"
 )
 
 router2.discover("0.0.0.3")
